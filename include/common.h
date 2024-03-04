@@ -7,6 +7,6 @@
 #include <stdbool.h>
 #include <stdint.h>
 
-enum State { LOW = 0, HI = 1 };
+enum State { LO = 0, HI = 1 };
 
 #endif /* COMMON_H */

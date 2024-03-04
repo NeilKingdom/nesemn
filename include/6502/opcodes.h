@@ -1,5 +1,5 @@
-#ifndef ISA_H
-#define ISA_H
+#ifndef OPCODES_H
+#define OPCODES_H
 
 enum Mnemonic {
     ADC,    /* Add with carry */
@@ -99,9 +99,10 @@ typedef struct {
     AddrMode mode;
 } opCode;
 
+/* Illegal opcode */
 #define ILL_OP ((opCode){ NOP, ILL })
 
-opCode isa_table[16][16] = {
+static opCode isa_table[16][16] = {
            /*  0x00        0x01      0x02         0x03    0x04          0x05        0x06      0x07      0x08        0x09        0x0A      0x0B    0x0C          0x0D        0x0E      0x0F */
 /* 0x00 */ {{BRK,IMPL}, {ORA,INDX}, ILL_OP,      ILL_OP, ILL_OP,     {ORA,ZPG }, {ASL,ZPG }, ILL_OP, {PHP,IMPL}, {ORA,IMDT}, {ASL,ACCM}, ILL_OP, ILL_OP,     {ORA,ABS }, {ASL,ABS }, ILL_OP},
 /* 0x10 */ {{BPL,REL }, {ORA,INDY}, ILL_OP,      ILL_OP, ILL_OP,     {ORA,ZPGX}, {ASL,ZPGX}, ILL_OP, {CLC,IMPL}, {ORA,ABSY}, ILL_OP,     ILL_OP, ILL_OP,     {ORA,ABSX}, {ASL,ABSX}, ILL_OP},
@@ -121,4 +122,4 @@ opCode isa_table[16][16] = {
 /* 0xF0 */ {{BEQ,REL }, {SBC,INDY}, ILL_OP,      ILL_OP, ILL_OP,     {SBC,ZPGX}, {INC,ZPGX}, ILL_OP, {SED,IMPL}, {SBC,ABSY}, ILL_OP,     ILL_OP, ILL_OP,     {SBC,ABSX}, {INC,ABSX}, ILL_OP},
 };
 
-#endif /* ISA_H */
+#endif /* OPCODES_H */
