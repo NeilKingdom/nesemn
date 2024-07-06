@@ -1,7 +1,7 @@
 #ifndef STACK_H
 #define STACK_H
 
-#include "../common.h"
+#include "common.h"
 
 #define IRQB_ADDR 0xFFFE
 #define RESB_ADDR 0xFFFC

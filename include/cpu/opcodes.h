@@ -1,7 +1,7 @@
 #ifndef OPCODES_H
 #define OPCODES_H
 
-enum Mnemonic {
+typedef enum {
     ADC,    /* Add with carry */
     AND,    /* AND (with accumulator) */
     ASL,    /* Arithmetic shift left */
@@ -58,7 +58,7 @@ enum Mnemonic {
     TXA,    /* Transfer x to accumulator */
     TXS,    /* Transfer x to SP */
     TYA     /* Transfer y to accumulator */
-};
+} Mnemonic_t;
 
 /**
  * Address Modes
@@ -77,7 +77,7 @@ enum Mnemonic {
  * zpg,x -> Zeropage, x-indexed  opCode $LL,X    Oparand is zeropage address; effective address is address incremented by X without carry
  * zpg,y -> Zeropage, y-indexed  opCode $LL,Y    Oparand is zeropage address; effective address is address incremented by Y without carry
  */
-enum AddrMode {
+typedef enum {
     ILL,    /* Illegal */
     ACCM,   /* Accumulator */
     ABS,    /* Absolute */
@@ -92,17 +92,17 @@ enum AddrMode {
     ZPG,    /* Zeropage */
     ZPGX,   /* Zeropage, x-indexed */
     ZPGY    /* Zeropage, y-indexed */
-};
+} AddrMode_t;
 
 typedef struct {
-    Mnemonic inst;
-    AddrMode mode;
-} opCode;
+    Mnemonic_t inst;
+    AddrMode_t mode;
+} OpCode_t;
 
 /* Illegal opcode */
-#define ILL_OP ((opCode){ NOP, ILL })
+#define ILL_OP ((OpCode_t){ NOP, ILL })
 
-static opCode isa_table[16][16] = {
+static OpCode_t isa_table[16][16] = {
            /*  0x00        0x01      0x02         0x03    0x04          0x05        0x06      0x07      0x08        0x09        0x0A      0x0B    0x0C          0x0D        0x0E      0x0F */
 /* 0x00 */ {{BRK,IMPL}, {ORA,INDX}, ILL_OP,      ILL_OP, ILL_OP,     {ORA,ZPG }, {ASL,ZPG }, ILL_OP, {PHP,IMPL}, {ORA,IMDT}, {ASL,ACCM}, ILL_OP, ILL_OP,     {ORA,ABS }, {ASL,ABS }, ILL_OP},
 /* 0x10 */ {{BPL,REL }, {ORA,INDY}, ILL_OP,      ILL_OP, ILL_OP,     {ORA,ZPGX}, {ASL,ZPGX}, ILL_OP, {CLC,IMPL}, {ORA,ABSY}, ILL_OP,     ILL_OP, ILL_OP,     {ORA,ABSX}, {ASL,ABSX}, ILL_OP},
@@ -121,5 +121,7 @@ static opCode isa_table[16][16] = {
 /* 0xE0 */ {{CPX,IMDT}, {SBC,INDX}, ILL_OP,      ILL_OP, {CPX,ZPG }, {SBC,ZPG }, {INC,ZPG }, ILL_OP, {INX,IMPL}, {SBC,IMDT}, {NOP,IMPL}, ILL_OP, {CPX,ABS }, {SBC,ABS }, {INC,ABS }, ILL_OP},
 /* 0xF0 */ {{BEQ,REL }, {SBC,INDY}, ILL_OP,      ILL_OP, ILL_OP,     {SBC,ZPGX}, {INC,ZPGX}, ILL_OP, {SED,IMPL}, {SBC,ABSY}, ILL_OP,     ILL_OP, ILL_OP,     {SBC,ABSX}, {INC,ABSX}, ILL_OP},
 };
+
+void cpu_op_exec(uint16_t addr);
 
 #endif /* OPCODES_H */

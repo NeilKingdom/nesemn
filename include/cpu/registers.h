@@ -16,7 +16,7 @@ typedef struct {
         uint8_t  s;
     } sp;
     uint8_t p;          /* Status register */
-} mProc6502_Regs;
+} CpuRegs_t;
 
 #define PFLAG_N(p) (((p) & (0x80)) >> 0x07)     /* Negative (HI = negative) */
 #define PFLAG_V(p) (((p) & (0x40)) >> 0x06)     /* Overflow (HI = true) */
@@ -27,10 +27,8 @@ typedef struct {
 #define PFLAG_Z(p) (((p) & (0x02)) >> 0x01)     /* Zero (HI = true) */
 #define PFLAG_C(p) (((p) & (0x01)) >> 0x00)     /* Carry (HI = true) */
 
-extern mProc6502_Regs regs6502;
-
 /* Helper functions */
 
-void proc6502_print_status_reg(void);
+void cpu_print_regs(void);
 
 #endif /* REGISTERS_H */

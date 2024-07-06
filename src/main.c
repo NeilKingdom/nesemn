@@ -1,19 +1,16 @@
-#define PATH_6502(file) ("../include/6502/##file")
+#include "../include/cpu/cpu.h"
 
-#include PATH_6502(stack.h)
-#include PATH_6502(registers.h)
-#include PATH_6502(processor.h)
-
-uint8_t stack[256];
-mProc6502_Ctx ctx6502;
-mProc6502_Regs regs;
-
-static void nes_turn_on(void) {
-    proc6502_turn_on();
-}
+CpuCtx_t cpu_ctx = { 0 };
 
 int main(void) {
-    nes_turn_on();
+    cpu_write_pin(RDY, HI);
+    printf("RDY pin: %d\n", cpu_read_pin(RDY));
+
+    uint8_t dbus = 0xF1;
+    cpu_set_data_bus(dbus);
+    assert(cpu_get_data_bus() == 0xF1);
+
+    cpu_print_regs();
 
     return EXIT_SUCCESS;
 }
