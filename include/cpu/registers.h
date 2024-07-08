@@ -1,8 +1,45 @@
-#ifndef REGISTERS_H
-#define REGISTERS_H
+#ifndef CPU_REGISTERS_H
+#define CPU_REGISTERS_H
 
 #include "../common.h"
 
+/*** Regsiter map ***/
+
+/* APU pulse wave channel 1 */
+#define REG_ADDR_SQ1_VOL        0x4000
+#define REG_ADDR_SQ1_SWEEP      0x4001
+#define REG_ADDR_SQ1_LO         0x4002
+#define REG_ADDR_SQ1_HI         0x4003
+
+/* APU pulse wave channel 2 */
+#define REG_ADDR_SQ2_VOL        0x4004
+#define REG_ADDR_SQ2_SWEEP      0x4005
+#define REG_ADDR_SQ2_LO         0x4006
+#define REG_ADDR_SQ2_HI         0x4007
+
+/* APU triangle wave channel */
+#define REG_ADDR_TRI_LINEAR     0x4008
+#define REG_ADDR_TRI_LO         0x400A
+#define REG_ADDR_TRI_HI         0x400B
+
+/* APU noise channel */
+#define REG_ADDR_NOISE_VOL      0x400C
+#define REG_ADDR_NOISE_LO       0x400E
+#define REG_ADDR_NOISE_HI       0x400F
+
+/* APU DMC channel */
+#define REG_ADDR_DMC_FREQ       0x4010
+#define REG_ADDR_DMC_RAW        0x4011
+#define REG_ADDR_DMC_START      0x4012
+#define REG_ADDR_DMC_LEN        0x4013
+
+/* Other */
+#define REG_ADDR_OAMDMA         0x4014
+#define REG_ADDR_SND_CHN        0x4015
+#define REG_ADDR_JOY1           0x4016
+#define REG_ADDR_JOY2           0x4017
+
+/* General Purpose Registers (GPR) */
 typedef struct {
     uint8_t a;          /* Accumulator */
     uint8_t y;          /* Index */
@@ -27,8 +64,8 @@ typedef struct {
 #define PFLAG_Z(p) (((p) & (0x02)) >> 0x01)     /* Zero (HI = true) */
 #define PFLAG_C(p) (((p) & (0x01)) >> 0x00)     /* Carry (HI = true) */
 
-/* Helper functions */
+/* Forward function declarations */
 
 void cpu_print_regs(void);
 
-#endif /* REGISTERS_H */
+#endif /* CPU_REGISTERS_H */

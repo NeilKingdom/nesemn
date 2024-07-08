@@ -78,20 +78,23 @@ typedef enum {
  * zpg,y -> Zeropage, y-indexed  opCode $LL,Y    Oparand is zeropage address; effective address is address incremented by Y without carry
  */
 typedef enum {
-    ILL,    /* Illegal */
-    ACCM,   /* Accumulator */
-    ABS,    /* Absolute */
-    ABSX,   /* Absolute, x-indexed */
-    ABSY,   /* Absolute, y-indexed */
-    IMDT,   /* Immediate */
-    IMPL,   /* Implied */
-    IND,    /* Indirect */
-    INDX,   /* Indirect, x-indexed */
-    INDY,   /* Indirect, y-indexed */
-    REL,    /* Relative */
-    ZPG,    /* Zeropage */
+    /* Indexed addressing */
     ZPGX,   /* Zeropage, x-indexed */
     ZPGY    /* Zeropage, y-indexed */
+    ABSX,   /* Absolute, x-indexed */
+    ABSY,   /* Absolute, y-indexed */
+    INDX,   /* Indirect, x-indexed */
+    INDY,   /* Indirect, y-indexed */
+
+    /* Other addressing */
+    IMPL,   /* Implicit */
+    ACCM,   /* Accumulator */
+    IMDT,   /* Immediate */
+    ZPG,    /* Zeropage */
+    ABS,    /* Absolute */
+    REL,    /* Relative */
+    IND,    /* Indirect */
+    ILL,    /* Illegal */
 } AddrMode_t;
 
 typedef struct {
