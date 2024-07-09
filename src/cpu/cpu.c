@@ -6,7 +6,7 @@
  * @param pin The pin that will be written to
  * @param state The state being written i.e. HI or LO
  */
-void cpu_write_pin(PinName_t pin, State_t state) {
+void cpu_write_pin(CpuPin_t pin, State_t state) {
     cpu_ctx.pins[pin].state = state;
 }
 
@@ -16,7 +16,7 @@ void cpu_write_pin(PinName_t pin, State_t state) {
  * @param pin The pin that will be read from
  * @returns The state of the pin
  */
-State_t cpu_read_pin(PinName_t pin) {
+State_t cpu_read_pin(CpuPin_t pin) {
     return cpu_ctx.pins[pin].state;
 }
 

@@ -3,12 +3,14 @@
 ### References
 - [NES Dev Wiki](https://www.nesdev.org/wiki/CPU)
 - [W65C02S Datasheet](https://www.westerndesigncenter.com/wdc/documentation/w65c02s.pdf)
+- [6502 ISA](https://www.masswerk.at/6502/6502_instruction_set.html)
 
 ### About
 
 The Ricoh 2A03 A.K.A. RP2A03 (NTSC) or RP2A07 (PAL) is an offshoot of the 6502 microcontroller. It disables the
 MOS6502's decimal mode. The 2A03/7 contains both the CPU and APU (audio processing unit). All illegal opcodes
-on the 2A03/7 function identically as the 6502. Every cycle is either a read or write cycle.
+on the 2A03/7 function identically as the 6502. Every cycle is either a read or write cycle. The 2A03/7 uses
+the MOS 6502 ISA for instructions.
 
 ---
 

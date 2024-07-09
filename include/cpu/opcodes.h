@@ -1,6 +1,8 @@
 #ifndef OPCODES_H
 #define OPCODES_H
 
+#include "../common.h"
+
 typedef enum {
     ADC,    /* Add with carry */
     AND,    /* AND (with accumulator) */
@@ -78,52 +80,171 @@ typedef enum {
  * zpg,y -> Zeropage, y-indexed  opCode $LL,Y    Oparand is zeropage address; effective address is address incremented by Y without carry
  */
 typedef enum {
+    ILL = -1, /* Illegal */
+
     /* Indexed addressing */
-    ZPGX,   /* Zeropage, x-indexed */
-    ZPGY    /* Zeropage, y-indexed */
-    ABSX,   /* Absolute, x-indexed */
-    ABSY,   /* Absolute, y-indexed */
-    INDX,   /* Indirect, x-indexed */
-    INDY,   /* Indirect, y-indexed */
+    ZPGX,     /* Zeropage, x-indexed */
+    ZPGY,     /* Zeropage, y-indexed */
+    ABSX,     /* Absolute, x-indexed */
+    ABSY,     /* Absolute, y-indexed */
+    INDX,     /* Indirect, x-indexed */
+    INDY,     /* Indirect, y-indexed */
 
     /* Other addressing */
-    IMPL,   /* Implicit */
-    ACCM,   /* Accumulator */
-    IMDT,   /* Immediate */
-    ZPG,    /* Zeropage */
-    ABS,    /* Absolute */
-    REL,    /* Relative */
-    IND,    /* Indirect */
-    ILL,    /* Illegal */
+    IMPL,     /* Implicit */
+    ACCM,     /* Accumulator */
+    IMDT,     /* Immediate */
+    ZPG,      /* Zeropage */
+    ABS,      /* Absolute */
+    REL,      /* Relative */
+    IND,      /* Indirect */
 } AddrMode_t;
 
+typedef void (*InstCallback_t)(AddrMode_t mode);
+
 typedef struct {
-    Mnemonic_t inst;
+    Mnemonic_t mnem;
+    InstCallback_t cb;
+} Instruction_t;
+
+/* Instruction callbacks */
+
+void adc_cb(AddrMode_t mode);
+void and_cb(AddrMode_t mode);
+void asl_cb(AddrMode_t mode);
+void bcc_cb(AddrMode_t mode);
+void bcs_cb(AddrMode_t mode);
+void beq_cb(AddrMode_t mode);
+void bit_cb(AddrMode_t mode);
+void bmi_cb(AddrMode_t mode);
+void bne_cb(AddrMode_t mode);
+void bpl_cb(AddrMode_t mode);
+void brk_cb(AddrMode_t mode);
+void bvc_cb(AddrMode_t mode);
+void bvs_cb(AddrMode_t mode);
+void clc_cb(AddrMode_t mode);
+void cld_cb(AddrMode_t mode);
+void cli_cb(AddrMode_t mode);
+void clv_cb(AddrMode_t mode);
+void cmp_cb(AddrMode_t mode);
+void cpx_cb(AddrMode_t mode);
+void cpy_cb(AddrMode_t mode);
+void dec_cb(AddrMode_t mode);
+void dex_cb(AddrMode_t mode);
+void dey_cb(AddrMode_t mode);
+void eor_cb(AddrMode_t mode);
+void inc_cb(AddrMode_t mode);
+void inx_cb(AddrMode_t mode);
+void iny_cb(AddrMode_t mode);
+void jmp_cb(AddrMode_t mode);
+void jsr_cb(AddrMode_t mode);
+void lda_cb(AddrMode_t mode);
+void ldx_cb(AddrMode_t mode);
+void ldy_cb(AddrMode_t mode);
+void lsr_cb(AddrMode_t mode);
+void nop_cb(AddrMode_t mode);
+void ora_cb(AddrMode_t mode);
+void pha_cb(AddrMode_t mode);
+void php_cb(AddrMode_t mode);
+void pla_cb(AddrMode_t mode);
+void plp_cb(AddrMode_t mode);
+void rol_cb(AddrMode_t mode);
+void ror_cb(AddrMode_t mode);
+void rti_cb(AddrMode_t mode);
+void rts_cb(AddrMode_t mode);
+void sbc_cb(AddrMode_t mode);
+void sec_cb(AddrMode_t mode);
+void sed_cb(AddrMode_t mode);
+void sei_cb(AddrMode_t mode);
+void sta_cb(AddrMode_t mode);
+void stx_cb(AddrMode_t mode);
+void sty_cb(AddrMode_t mode);
+void tax_cb(AddrMode_t mode);
+void tay_cb(AddrMode_t mode);
+void tsx_cb(AddrMode_t mode);
+void txa_cb(AddrMode_t mode);
+void txs_cb(AddrMode_t mode);
+void tya_cb(AddrMode_t mode);
+
+/* Instructions */
+
+static const Instruction_t _adc = { .mnem = ADC, .cb = adc_cb };
+static const Instruction_t _and = { .mnem = AND, .cb = and_cb };
+static const Instruction_t _asl = { .mnem = ASL, .cb = and_cb };
+static const Instruction_t _bcc = { .mnem = BCC, .cb = bcc_cb };
+static const Instruction_t _bcs = { .mnem = BCS, .cb = bcs_cb };
+static const Instruction_t _beq = { .mnem = BEQ, .cb = beq_cb };
+static const Instruction_t _bit = { .mnem = BIT, .cb = bit_cb };
+static const Instruction_t _bmi = { .mnem = BMI, .cb = bmi_cb };
+static const Instruction_t _bne = { .mnem = BNE, .cb = bne_cb };
+static const Instruction_t _bpl = { .mnem = BPL, .cb = bpl_cb };
+static const Instruction_t _brk = { .mnem = BRK, .cb = brk_cb };
+static const Instruction_t _bvc = { .mnem = BVC, .cb = bvc_cb };
+static const Instruction_t _bvs = { .mnem = BVS, .cb = bvs_cb };
+static const Instruction_t _clc = { .mnem = CLC, .cb = clc_cb };
+static const Instruction_t _cld = { .mnem = CLD, .cb = cld_cb };
+static const Instruction_t _cli = { .mnem = CLI, .cb = cli_cb };
+static const Instruction_t _clv = { .mnem = CLV, .cb = clv_cb };
+static const Instruction_t _cmp = { .mnem = CMP, .cb = cmp_cb };
+static const Instruction_t _cpx = { .mnem = CPX, .cb = cpx_cb };
+static const Instruction_t _cpy = { .mnem = CPY, .cb = cpy_cb };
+static const Instruction_t _dec = { .mnem = DEC, .cb = dec_cb };
+static const Instruction_t _dex = { .mnem = DEX, .cb = dex_cb };
+static const Instruction_t _dey = { .mnem = DEY, .cb = dey_cb };
+static const Instruction_t _eor = { .mnem = EOR, .cb = eor_cb };
+static const Instruction_t _inc = { .mnem = INC, .cb = inc_cb };
+static const Instruction_t _inx = { .mnem = INX, .cb = inx_cb };
+static const Instruction_t _iny = { .mnem = INY, .cb = iny_cb };
+static const Instruction_t _jmp = { .mnem = JMP, .cb = jmp_cb };
+static const Instruction_t _jsr = { .mnem = JSR, .cb = jsr_cb };
+static const Instruction_t _lda = { .mnem = LDA, .cb = lda_cb };
+static const Instruction_t _ldx = { .mnem = LDX, .cb = ldx_cb };
+static const Instruction_t _ldy = { .mnem = LDY, .cb = ldy_cb };
+static const Instruction_t _lsr = { .mnem = LSR, .cb = lsr_cb };
+static const Instruction_t _nop = { .mnem = NOP, .cb = nop_cb };
+static const Instruction_t _ora = { .mnem = ORA, .cb = ora_cb };
+static const Instruction_t _pha = { .mnem = PHA, .cb = pha_cb };
+static const Instruction_t _php = { .mnem = PHP, .cb = php_cb };
+static const Instruction_t _pla = { .mnem = PLA, .cb = pla_cb };
+static const Instruction_t _plp = { .mnem = PLP, .cb = plp_cb };
+static const Instruction_t _rol = { .mnem = ROL, .cb = rol_cb };
+static const Instruction_t _ror = { .mnem = ROR, .cb = ror_cb };
+static const Instruction_t _rti = { .mnem = RTI, .cb = rti_cb };
+static const Instruction_t _rts = { .mnem = RTS, .cb = rts_cb };
+static const Instruction_t _sbc = { .mnem = SBC, .cb = sbc_cb };
+static const Instruction_t _sec = { .mnem = SEC, .cb = sec_cb };
+static const Instruction_t _sed = { .mnem = SED, .cb = sed_cb };
+static const Instruction_t _sei = { .mnem = SEI, .cb = sei_cb };
+static const Instruction_t _sta = { .mnem = STA, .cb = sta_cb };
+static const Instruction_t _stx = { .mnem = STX, .cb = stx_cb };
+static const Instruction_t _sty = { .mnem = STY, .cb = sty_cb };
+static const Instruction_t _tax = { .mnem = TAX, .cb = tax_cb };
+static const Instruction_t _tay = { .mnem = TAY, .cb = tay_cb };
+static const Instruction_t _tsx = { .mnem = TSX, .cb = tsx_cb };
+static const Instruction_t _txa = { .mnem = TXA, .cb = txa_cb };
+static const Instruction_t _txs = { .mnem = TXS, .cb = txs_cb };
+static const Instruction_t _tya = { .mnem = TYA, .cb = tya_cb };
+
+/* Opcode struct */
+typedef struct {
+    Instruction_t inst;
     AddrMode_t mode;
 } OpCode_t;
 
-/* Illegal opcode */
-#define ILL_OP ((OpCode_t){ NOP, ILL })
+#define ILL_OP ((OpCode_t){ .inst = _nop, .mode = ILL })
 
 static OpCode_t isa_table[16][16] = {
-           /*  0x00        0x01      0x02         0x03    0x04          0x05        0x06      0x07      0x08        0x09        0x0A      0x0B    0x0C          0x0D        0x0E      0x0F */
-/* 0x00 */ {{BRK,IMPL}, {ORA,INDX}, ILL_OP,      ILL_OP, ILL_OP,     {ORA,ZPG }, {ASL,ZPG }, ILL_OP, {PHP,IMPL}, {ORA,IMDT}, {ASL,ACCM}, ILL_OP, ILL_OP,     {ORA,ABS }, {ASL,ABS }, ILL_OP},
-/* 0x10 */ {{BPL,REL }, {ORA,INDY}, ILL_OP,      ILL_OP, ILL_OP,     {ORA,ZPGX}, {ASL,ZPGX}, ILL_OP, {CLC,IMPL}, {ORA,ABSY}, ILL_OP,     ILL_OP, ILL_OP,     {ORA,ABSX}, {ASL,ABSX}, ILL_OP},
-/* 0x20 */ {{JSR,ABS }, {AND,INDX}, ILL_OP,      ILL_OP, {BIT,ZPG }, {AND,ZPG }, {ROL,ZPG }, ILL_OP, {PLP,IMPL}, {AND,IMDT}, {ROL,ACCM}, ILL_OP, {BIT,ABS }, {AND,ABS }, {ROL,ABS }, ILL_OP},
-/* 0x30 */ {{BMI,REL }, {AND,INDY}, ILL_OP,      ILL_OP, ILL_OP,     {AND,ZPGX}, {ROL,ZPGX}, ILL_OP, {SEC,IMPL}, {AND,ABSY}, ILL_OP,     ILL_OP, ILL_OP,     {AND,ABSX}, {ROL,ABSX}, ILL_OP},
-/* 0x40 */ {{RTI,IMPL}, {EOR,INDX}, ILL_OP,      ILL_OP, ILL_OP,     {EOR,ZPG }, {LSR,ZPG }, ILL_OP, {PHA,IMPL}, {EOR,IMDT}, {LSR,ACCM}, ILL_OP, {JMP,ABS }, {EOR,ABS }, {LSR,ABS }, ILL_OP},
-/* 0x50 */ {{BVC,REL }, {EOR,INDY}, ILL_OP,      ILL_OP, ILL_OP,     {EOR,ZPGX}, {LSR,ZPGX}, ILL_OP, {CLI,IMPL}, {EOR,ABSY}, ILL_OP,     ILL_OP, ILL_OP,     {EOR,ABSX}, {LSR,ABSX}, ILL_OP},
-/* 0x60 */ {{RTS,IMPL}, {ADC,INDX}, ILL_OP,      ILL_OP, ILL_OP,     {ADC,ZPG }, {ROR,ZPG }, ILL_OP, {PLA,IMPL}, {ADC,IMDT}, {ROR,ACCM}, ILL_OP, {JMP,IND }, {ADC,ABS }, {ROR,ABS }, ILL_OP},
-/* 0x70 */ {{BVS,REL }, {ADC,INDY}, ILL_OP,      ILL_OP, ILL_OP,     {ADC,ZPGX}, {ROR,ZPGX}, ILL_OP, {SEI,IMPL}, {ADC,ABSY}, ILL_OP,     ILL_OP, ILL_OP,     {ADC,ABSX}, {ROR,ABSX}, ILL_OP},
-/* 0x80 */ {ILL_OP,     {STA,INDX}, ILL_OP,      ILL_OP, {STY,ZPG }, {STA,ZPG }, {STX,ZPG }, ILL_OP, {DEY,IMPL}, ILL_OP,     {TXA,IMPL}, ILL_OP, {STY,ABS }, {STA,ABS }, {STX,ABS }, ILL_OP},
-/* 0x90 */ {{BCC,REL }, {STA,INDY}, ILL_OP,      ILL_OP, {STY,ZPGX}, {STA,ZPGX}, {STX,ZPGY}, ILL_OP, {TYA,IMPL}, {STA,ABSY}, {TXS,IMPL}, ILL_OP, ILL_OP,     {STA,ABSX}, ILL_OP,     ILL_OP},
-/* 0xA0 */ {{LDY,IMDT}, {LDA,INDX}, {LDX ,IMDT}, ILL_OP, {LDY,ZPG }, {LDA,ZPG }, {LDX,ZPG }, ILL_OP, {TAY,IMPL}, {LDA,IMDT}, {TAX,IMPL}, ILL_OP, {LDY,ABS }, {LDA,ABS }, {LDX,ABS }, ILL_OP},
-/* 0xB0 */ {{BCS,REL }, {LDA,INDY}, ILL_OP,      ILL_OP, {LDY,ZPGX}, {LDA,ZPGX}, {LDX,ZPGY}, ILL_OP, {CLV,IMPL}, {LDA,ABSY}, {TSX,IMPL}, ILL_OP, {LDY,ABSX}, {LDA,ABSX}, {LDX,ABSY}, ILL_OP},
-/* 0xC0 */ {{CPY,IMDT}, {CMP,INDX}, ILL_OP,      ILL_OP, {CPY,ZPG }, {CMP,ZPG }, {DEC,ZPG }, ILL_OP, {INY,IMPL}, {CMP,IMDT}, {DEX,IMPL}, ILL_OP, {CPY,ABS }, {CMP,ABS }, {DEC,ABS }, ILL_OP},
-/* 0xD0 */ {{BNE,REL }, {CMP,INDY}, ILL_OP,      ILL_OP, ILL_OP,     {CMP,ZPGX}, {DEC,ZPGX}, ILL_OP, {CLD,IMPL}, {CMP,ABSY}, ILL_OP,     ILL_OP, ILL_OP,     {CMP,ABSX}, {DEC,ABSX}, ILL_OP},
-/* 0xE0 */ {{CPX,IMDT}, {SBC,INDX}, ILL_OP,      ILL_OP, {CPX,ZPG }, {SBC,ZPG }, {INC,ZPG }, ILL_OP, {INX,IMPL}, {SBC,IMDT}, {NOP,IMPL}, ILL_OP, {CPX,ABS }, {SBC,ABS }, {INC,ABS }, ILL_OP},
-/* 0xF0 */ {{BEQ,REL }, {SBC,INDY}, ILL_OP,      ILL_OP, ILL_OP,     {SBC,ZPGX}, {INC,ZPGX}, ILL_OP, {SED,IMPL}, {SBC,ABSY}, ILL_OP,     ILL_OP, ILL_OP,     {SBC,ABSX}, {INC,ABSX}, ILL_OP},
+/* 0x00 */
+    {
+        {_brk,IMPL}, {_ora,IND},  ILL_OP,      ILL_OP,      ILL_OP,      {_ora,ZPG}, {_asl,ZPG}, ILL_OP,
+        {_php,IMPL}, {_ora,IMDT}, {_asl,ACCM}, ILL_OP,      ILL_OP,      {_ora,ABS}, {_asl,ABS}, ILL_OP,
+    },
+/* 0x01 */
+    {
+    },
 };
+
+/* Forward function declarations */
 
 void cpu_op_exec(uint16_t addr);
 
