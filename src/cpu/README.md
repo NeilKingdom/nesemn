@@ -10,7 +10,7 @@ The Ricoh 2A03 A.K.A. RP2A03 (NTSC) or RP2A07 (PAL) is an offshoot of the 6502 m
 MOS6502's decimal mode. The 2A03/7 contains both the CPU and APU (audio processing unit). All illegal opcodes
 on the 2A03/7 function identically as the 6502. Every cycle is either a read or write cycle.
 
-===
+---
 
 ### CPU Memory Map
 
@@ -28,7 +28,7 @@ on the 2A03/7 function identically as the 6502. Every cycle is either a read or 
 | $6000-$7FFF   | $2000 | Usually cartridge RAM when present                                                   |
 | $8000-$FFFF   | $8000 | Usually cartridge ROM and mapper registers                                           |
 
-===
+---
 
 ### APU
 

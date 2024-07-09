@@ -7,7 +7,7 @@
 
 The Ricoh RP2C02 Picture Processing Unit (PPU) is a custom IC made for the NES.
 
-===
+---
 
 ### PPU Memory Map
 
@@ -25,4 +25,4 @@ The Ricoh RP2C02 Picture Processing Unit (PPU) is a custom IC made for the NES.
 | $6000-$7FFF   | $2000 | Usually cartridge RAM when present                                                   |
 | $8000-$FFFF   | $8000 | Usually cartridge ROM and mapper registers                                           |
 
-===
+---
