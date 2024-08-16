@@ -1,0 +1,14 @@
+-I
+include
+-I
+include/cpu
+-I
+include/cic
+-I
+include/mobo_mapper
+-I
+include/ppu
+-I
+include/video
+-I
+include/wram

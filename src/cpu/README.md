@@ -16,21 +16,36 @@ the MOS 6502 ISA for instructions.
 
 ### CPU Memory Map
 
-| Address range | Size  | Device                                                                               |
-|---------------|-------|--------------------------------------------------------------------------------------|
-| $0000-$07FF   | $0800 | 2 KB internal RAM                                                                    |
-| $0800-$0FFF   | $0800 |                                                                                      |
-| $1000-$17FF   | $0800 | Mirrors of $0000-$07FF                                                               |
-| $1800-$1FFF   | $0800 |                                                                                      |
-| $2000-$2007   | $0008 | NES PPU registers                                                                    |
-| $2008-$3FFF   | $1FF8 | Mirrors of $2000-$2007 (repeats every 8 bytes)                                       |
-| $4000-$4017   | $0018 | NES APU and I/O registers                                                            |
-| $4018-$401F   | $0008 | APU and I/O functionality that is normally disabled                                  |
-| $4020-$FFFF   | $BFE0 | Unmapped. Available for cartridge use                                                |
-| $6000-$7FFF   | $2000 | Usually cartridge RAM when present                                                   |
-| $8000-$FFFF   | $8000 | Usually cartridge ROM and mapper registers                                           |
+The 2A03/7 has a 16-bit address bus, meaning it can support 64K of memory with addresses ranging from
+$0000-$FFFF. Memory locations $0000-$07FF are mirrored three times between $0800-$1FFF.
+
+| Address range | Size  | Device                                         |
+|---------------|-------|------------------------------------------------|
+| $0000-$00FF   | $0100 | Zero page                                      |
+| $0100-$01FF   | $0100 | Stack                                          |
+| $0200-$07FF   | $0600 | RAM                                            |
+| $0800-$0FFF   | $0800 |                                                |
+| $1000-$17FF   | $0800 | Mirrors of $0000-$07FF                         |
+| $1800-$1FFF   | $0800 |                                                |
+| $2000-$2007   | $0008 | I/O registers                                  |
+| $2008-$3FFF   | $1FF8 | Mirrors of $2000-$2007 (repeats every 8 bytes) |
+| $4000-$401F   | $0020 | I/O regsiters                                  |
+| $4020-$5FFF   | $1FE0 | Expansion ROM                                  |
+| $6000-$7FFF   | $2000 | SRAM                                           |
+| $8000-$BFFF   | $4000 | Usually cartridge RAM when present             |
+| $C000-$FFFF   | $4000 | Usually cartridge ROM and mapper registers     |
 
 ---
+
+### GPIO Registers
+
+##### Program Counter (CP)
+
+##### Stack Counter (SP)
+
+The stack pointer is an 8-bit register located at memory locations $0100-$01FF. The stack grows downwards,
+meaning push operations decrement SP, and pop operations increment it. SP wraps back to $0100 when it reaches
+$01FF.
 
 ### APU
 

@@ -1,4 +1,4 @@
-#include "../include/cpu/cpu.h"
+#include "cpu.h"
 
 CpuCtx_t cpu_ctx = { 0 };
 

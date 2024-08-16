@@ -10,10 +10,10 @@
 #include <assert.h>
 #include <unistd.h>
 
-typedef enum { LO = 0, HI = 1 } State_t;
+typedef enum { LO = 0, HI = 1 } PinState_t;
 
 typedef struct {
-    State_t state;
+    PinState_t state;
 } Pin_t;
 
 #endif /* COMMON_H */

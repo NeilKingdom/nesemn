@@ -31,7 +31,7 @@
  *         `------'
  */
 typedef enum {
-    AD1 = 1,    /* Audio out pin (both pulse waves) */
+    AD1,        /* Audio out pin (both pulse waves) */
     AD2,        /* Audio out pin (triangle, noise, and DPCM) */
     RSTB,       /* Reset (bar) */
     A00,        /* Address pin 0 */
@@ -82,10 +82,12 @@ extern CpuCtx_t cpu_ctx;
 
 /* Forward function declarations */
 
-void        cpu_write_pin(CpuPin_t pin, State_t state);
-State_t     cpu_read_pin(CpuPin_t pin);
+void        cpu_write_pin(CpuPin_t pin, PinState_t state);
+PinState_t  cpu_read_pin(CpuPin_t pin);
 uint8_t     cpu_get_data_bus(void);
 void        cpu_set_data_bus(uint8_t data);
+uint8_t     cpu_get_ctrl_bus(void);
+void        cpu_set_ctrl_bus(uint8_t data);
 uint16_t    cpu_get_addr_bus(void);
 void        cpu_set_addr_bus(uint16_t addr);
 

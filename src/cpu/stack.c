@@ -1,4 +1,4 @@
-#include "../../include/6502/stack.h"
+#include "memory.h"
 
 uint8_t stack[256] = { 0 };
 

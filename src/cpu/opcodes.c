@@ -1,4 +1,4 @@
-#include "../../include/cpu/opcodes.h"
+#include "opcodes.h"
 
 void adc_cb(AddrMode_t mode) {
 
